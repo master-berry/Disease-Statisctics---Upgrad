@@ -8,15 +8,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 @Service
 public class DiseaseShStrategy implements IndianDiseaseStat {
@@ -28,39 +23,21 @@ public class DiseaseShStrategy implements IndianDiseaseStat {
     @Value("${config.diseaseSh-io-url}")
     private String baseUrl;
 
-    public DiseaseShStrategy()
-    {
+    /**
+     * Constructor for the DiseaseShStrategy class.
+     * Initializes the RestTemplate instance.
+     */
+    public DiseaseShStrategy() {
         restTemplate = RestServiceGenerator.GetInstance();
     }
 
+    /**
+     * Retrieves the active count of COVID-19 cases for India from the DiseaseShResponse.
+     *
+     * @return the confirmed cases count for India as a String rounded to 0 decimal places.
+     * If the country is not India or if an error occurs, returns "0" or null, respectively.
+     */
     @Override
-//    public String GetActiveCount() {
-//    	//write a try catch block here
-//
-//    	//try block
-//    	try {
-//            DiseaseShResponse diseaseShResponse = getDiseaseShResponseResponses();
-//            return String.valueOf(Math.round(diseaseShResponse.getCases()));
-//
-//        } catch (Exception e) {
-//            logger.error("Error occured", e);
-//            return null;
-//        }
-//        //obtain response from the getDiseaseShResponseResponses() method
-//	    	//store it in an object
-//
-//    		//get the response using the getCases() method
-//	    	//return the response after rounding it up to 0 decimal places
-//
-//
-//    	//catch block
-//    		//log the error
-//
-//    		//return null
-//
-//
-//    }
-
     public String GetActiveCount() {
         try {
             // Obtain response from the getDiseaseShResponseResponses() method
@@ -85,12 +62,15 @@ public class DiseaseShStrategy implements IndianDiseaseStat {
         }
     }
 
-
-
+    /**
+     * Reads and parses the DiseaseSh.json file to obtain the DiseaseShResponse object.
+     *
+     * @return the DiseaseShResponse object containing data from the JSON file.
+     * @throws IOException if there is an error reading the JSON file.
+     */
     private DiseaseShResponse getDiseaseShResponseResponses() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         ClassPathResource resource = new ClassPathResource("DiseaseSh.json");
         return objectMapper.readValue(resource.getFile(), DiseaseShResponse.class);
-
     }
 }

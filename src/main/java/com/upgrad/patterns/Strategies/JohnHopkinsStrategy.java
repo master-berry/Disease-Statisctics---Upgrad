@@ -8,17 +8,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class JohnHopkinsStrategy implements IndianDiseaseStat {
@@ -59,9 +52,6 @@ public class JohnHopkinsStrategy implements IndianDiseaseStat {
 		//catch block
 		//log the error
 		//return null
-
-
-
 	}
 
 	private JohnHopkinResponse[] getJohnHopkinResponses() throws IOException {
