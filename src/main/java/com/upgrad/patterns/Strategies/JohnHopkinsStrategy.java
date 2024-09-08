@@ -36,17 +36,29 @@ public class JohnHopkinsStrategy implements IndianDiseaseStat {
 
 	@Override
 	public String GetActiveCount() {
-
-
+		float confirmedCases = 0;
+		try {
+			JohnHopkinResponse[] responses = getJohnHopkinResponses();
+			for(JohnHopkinResponse response: responses){
+				if(response.getCountry().equalsIgnoreCase("India")){
+					confirmedCases = confirmedCases + response.getStats().getConfirmed();
+				}
+			}
+			return String.valueOf((int) confirmedCases);
+		}
+		catch (Exception e){
+			logger.error("Error occured", e);
+			return null;
+		}
 		//try block
-			//get response from the getJohnHopkinResponses method
-			//filter the data based such that country equals India (use getCountry() to get the country value)
-			//Map the data to "confirmed" value (use getStats() and getConfirmed() to get stats value and confirmed value)
-			//Reduce the data to get a sum of all the "confirmed" values
-			//return the response after rounding it up to 0 decimal places
+		//get response from the getJohnHopkinResponses method
+		//filter the data based such that country equals India (use getCountry() to get the country value)
+		//Map the data to "confirmed" value (use getStats() and getConfirmed() to get stats value and confirmed value)
+		//Reduce the data to get a sum of all the "confirmed" values
+		//return the response after rounding it up to 0 decimal places
 		//catch block
-			//log the error
-			//return null
+		//log the error
+		//return null
 
 
 

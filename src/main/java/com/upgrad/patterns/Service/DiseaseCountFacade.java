@@ -4,10 +4,15 @@ import com.upgrad.patterns.Constants.SourceType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
+
 @Service
 public class DiseaseCountFacade {
 
-   //create a private object indiaDiseaseStat of type IndiaDiseaseStatFactory
+    //create a private object indiaDiseaseStat of type IndiaDiseaseStatFactory
+
+    @Autowired
+    private IndiaDiseaseStatFactory indiaDiseaseStat;
 
     @Autowired
     public DiseaseCountFacade(IndiaDiseaseStatFactory indiaDiseaseStat)
@@ -15,19 +20,25 @@ public class DiseaseCountFacade {
         this.indiaDiseaseStat = indiaDiseaseStat;
     }
 
-    
-    //create a public method getDiseaseShCount() that has Object as its return type
-    	//call the GetInstance method with DiseaseSh as the parameter using the indiaDiseaseStat object created on line 10
-    	//Based on the strategy returned, call the specific implementation of the GetActiveCount method
-    	//return the response
-   
-    
-    //create a public method getJohnHopkinCount() that has Object as its return type
-		//call the GetInstance method with JohnHopkins as the parameter using the indiaDiseaseStat object created on line 10
-		//Based on the strategy returned, call the specific implementation of the GetActiveCount method
-    	//return the response
-    
 
+    //create a public method getDiseaseShCount() that has Object as its return type
+    //call the GetInstance method with DiseaseSh as the parameter using the indiaDiseaseStat object created on line 10
+    //Based on the strategy returned, call the specific implementation of the GetActiveCount method
+    //return the response
+    public Object getDiseaseShCount() {
+        return indiaDiseaseStat.GetInstance(SourceType.DiseaseSh).GetActiveCount();
+
+    }
+
+
+    //create a public method getJohnHopkinCount() that has Object as its return type
+    //call the GetInstance method with JohnHopkins as the parameter using the indiaDiseaseStat object created on line 10
+    //Based on the strategy returned, call the specific implementation of the GetActiveCount method
+    //return the response
+
+    public Object  getJohnHopkinCount() {
+        return indiaDiseaseStat.GetInstance(SourceType.JohnHopkins).GetActiveCount();
+    }
 
     public Object getInfectedRatio(String sourceType) throws IllegalArgumentException {
         try {

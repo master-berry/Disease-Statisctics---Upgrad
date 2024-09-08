@@ -34,25 +34,58 @@ public class DiseaseShStrategy implements IndianDiseaseStat {
     }
 
     @Override
+//    public String GetActiveCount() {
+//    	//write a try catch block here
+//
+//    	//try block
+//    	try {
+//            DiseaseShResponse diseaseShResponse = getDiseaseShResponseResponses();
+//            return String.valueOf(Math.round(diseaseShResponse.getCases()));
+//
+//        } catch (Exception e) {
+//            logger.error("Error occured", e);
+//            return null;
+//        }
+//        //obtain response from the getDiseaseShResponseResponses() method
+//	    	//store it in an object
+//
+//    		//get the response using the getCases() method
+//	    	//return the response after rounding it up to 0 decimal places
+//
+//
+//    	//catch block
+//    		//log the error
+//
+//    		//return null
+//
+//
+//    }
+
     public String GetActiveCount() {
-    	//write a try catch block here
-    	
-    	//try block
-    	
-	    	//obtain response from the getDiseaseShResponseResponses() method
-	    	//store it in an object
-	    	
-    		//get the response using the getCases() method
-	    	//return the response after rounding it up to 0 decimal places
-    	
-    	
-    	//catch block
-    		//log the error
-    	
-    		//return null
-    	
-    	
+        try {
+            // Obtain response from the getDiseaseShResponseResponses() method
+            DiseaseShResponse response = getDiseaseShResponseResponses();
+
+            // Check if the country is "India"
+            if ("India".equalsIgnoreCase(response.getCountry())) {
+                // Get the confirmed cases
+                Float confirmedCases = response.getCases();
+
+                // Return the confirmed cases after rounding to 0 decimal places
+                return String.format("%.0f", confirmedCases);
+            } else {
+                return "0"; // If the country is not India, return 0
+            }
+        } catch (IOException e) {
+            // Log the error
+            logger.error("Error fetching the active count from DiseaseShResponse", e);
+
+            // Return null or an appropriate error message
+            return null;
+        }
     }
+
+
 
     private DiseaseShResponse getDiseaseShResponseResponses() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
